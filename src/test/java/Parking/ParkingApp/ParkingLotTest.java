@@ -13,13 +13,13 @@ import org.junit.runner.RunWith;
 import static org.mockito.Mockito.verify;
 import javax.naming.LimitExceededException;
 public class ParkingLotTest {
-	@Test
-	public void test() {
+//	@Test
+//	public void test() {
 //	ParkingLot parkingLot = new ParkingLot(20);
 //		Car car = new Car();
 //		
 //		assertDoesNotThrow(() -> parkingLot.park(car));
-    }
+//    }
 //
 //	@Test
 //	public void testThrowsExceptionIfCarIsAlreadyParked() throws LimitExceededException, CarIsAlreadyParkedException {
@@ -63,32 +63,42 @@ public class ParkingLotTest {
 //		assertThrows(CarIsNotAvailableException.class, () -> parkingLot.unPark(car));
 //	}
 
+//	@Test
+//	public void testIfTheOwnerAndCopIsNotifiedWhenParkingLotIsFull()
+//			throws CarIsAlreadyParkedException, LimitExceededException {
+//		ParkingLot lot=new ParkingLot(1);
+//		TrafficCop trafficCop=Mockito.mock(TrafficCop.class);
+//		ParkingLotOwner owner=Mockito.mock(ParkingLotOwner.class);
+//		lot.setTrafficCop(trafficCop);
+//		lot.setParkingLotOwner(owner);
+//		Car car = new Car();
+//		lot.park(car);
+//		verify(trafficCop).notifyWhenLotIsFull();
+//		verify(owner).notifyFull();
+//		
+//	}
+//	@Test
+//	public void testIfTheCopIsNotifiedWhenSpaceIsAvailableinLot()
+//			throws CarIsNotAvailableException, LimitExceededException, CarIsAlreadyParkedException {
+//		ParkingLot lot=new ParkingLot(1);
+//		TrafficCop trafficCop=Mockito.mock(TrafficCop.class);
+//		ParkingLotOwner owner=Mockito.mock(ParkingLotOwner.class);
+//		lot.setParkingLotOwner(owner);
+//		lot.setTrafficCop(trafficCop);
+//		Car car = new Car();
+//		lot.park(car);
+//		lot.unPark(car);
+//		verify(trafficCop).notifyWhenSpaceIsAvailable();
+//	}
 	@Test
-	public void testIfTheOwnerAndCopIsNotifiedWhenParkingLotIsFull()
-			throws CarIsAlreadyParkedException, LimitExceededException {
+	public void test() throws LimitExceededException, CarIsAlreadyParkedException {
 		ParkingLot lot=new ParkingLot(1);
-		TrafficCop trafficCop=Mockito.mock(TrafficCop.class);
 		ParkingLotOwner owner=Mockito.mock(ParkingLotOwner.class);
-		lot.setTrafficCop(trafficCop);
+		ParkingLotAttendar attendar=Mockito.mock(ParkingLotAttendar.class);
 		lot.setParkingLotOwner(owner);
 		Car car = new Car();
 		lot.park(car);
-		verify(trafficCop).notifyWhenLotIsFull();
-		verify(owner).notifyFull();
-		
+		verify(owner).notifyWhencarEntersLot(car);
+		verify(attendar).addCarToLot(car,1);
 	}
-	@Test
-	public void testIfTheCopIsNotifiedWhenSpaceIsAvailableinLot()
-			throws CarIsNotAvailableException, LimitExceededException, CarIsAlreadyParkedException {
-		ParkingLot lot=new ParkingLot(1);
-		TrafficCop trafficCop=Mockito.mock(TrafficCop.class);
-		ParkingLotOwner owner=Mockito.mock(ParkingLotOwner.class);
-		lot.setParkingLotOwner(owner);
-		lot.setTrafficCop(trafficCop);
-		Car car = new Car();
-		lot.park(car);
-		lot.unPark(car);
-		verify(trafficCop).notifyWhenSpaceIsAvailable();
-	}
-	
 }

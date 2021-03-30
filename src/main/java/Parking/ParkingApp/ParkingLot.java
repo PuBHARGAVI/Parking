@@ -26,12 +26,19 @@ public class ParkingLot {
 		this.parkingLotCapacity = parkingLotCapacity;
 	}
 
+	public ArrayList<Car> getParkedCars() {
+		return parkedCars;
+	}
+
+	public void setParkedCars(ArrayList<Car> parkedCars) {
+		this.parkedCars = parkedCars;
+	}
+
 	public void park(Car car) throws LimitExceededException, CarIsAlreadyParkedException {
 		if (parkedCars.contains(car)) {
 			throw new CarIsAlreadyParkedException();
 		} else if (isParkingSlotAvailable()) {
-			parkedCars.add(car);
-			parkedCars.size();
+			parkingLotOwner.notifyWhencarEntersLot(car);
 			if (!isParkingSlotAvailable()) {
 				System.out.println(parkingLotOwner);
 				System.out.println(trafficCop);

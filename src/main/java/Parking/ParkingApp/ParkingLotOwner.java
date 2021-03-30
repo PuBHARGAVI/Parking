@@ -1,7 +1,14 @@
 package Parking.ParkingApp;
 
-public interface ParkingLotOwner {
+public abstract class ParkingLotOwner {
 
-	public void notifyFull();
+	public abstract void notifyFull();
+
+	public void notifyWhencarEntersLot(Car car) {
+		System.out.println("hudhg");
+		ParkingLotAttendar attendar = new ParkingLotAttendar();
+		int slotPosition=1;
+		attendar.addCarToLot(car,slotPosition);
+	}
 
 }
