@@ -1,14 +1,18 @@
 package Parking.ParkingApp;
 
 import javax.naming.LimitExceededException;
-
 import java.util.ArrayList;
 
 public class ParkingLot {
 	private final int parkingLotCapacity;
 	private ArrayList<Car> parkedCars = new ArrayList<Car>();
-	ParkingLotOwner parkingLotOwner;
-	TrafficCop trafficCop;
+	private ParkingLotOwner parkingLotOwner;
+	private TrafficCop trafficCop;
+	private ParkingLotAttendent parkingLotAttendent;
+
+	public void setParkingLotAttendent(ParkingLotAttendent parkingLotAttendent) {
+		this.parkingLotAttendent = parkingLotAttendent;
+	}
 
 	public TrafficCop getTrafficCop() {
 		return trafficCop;
@@ -21,42 +25,36 @@ public class ParkingLot {
 	public void setParkingLotOwner(ParkingLotOwner parkingLotOwner) {
 		this.parkingLotOwner = parkingLotOwner;
 	}
-
-	public ParkingLot(int parkingLotCapacity) {
-		this.parkingLotCapacity = parkingLotCapacity;
-	}
-
+	
 	public ArrayList<Car> getParkedCars() {
 		return parkedCars;
 	}
-
-	public void setParkedCars(ArrayList<Car> parkedCars) {
-		this.parkedCars = parkedCars;
+	
+	public ParkingLot(int parkingLotCapacity) {
+		this.parkingLotCapacity = parkingLotCapacity;
 	}
 
 	public void park(Car car) throws LimitExceededException, CarIsAlreadyParkedException {
 		if (parkedCars.contains(car)) {
 			throw new CarIsAlreadyParkedException();
-		} else if (isParkingSlotAvailable()) {
-			parkingLotOwner.notifyWhencarEntersLot(car);
-			if (!isParkingSlotAvailable()) {
-				System.out.println(parkingLotOwner);
-				System.out.println(trafficCop);
-				parkingLotOwner.notifyFull();
-				trafficCop.notifyWhenLotIsFull();
-			}
-		} else {
+		} 
+		else if (!isParkingSlotAvailable()) {
 			throw new LimitExceededException("No Parking Slot Is Available");
+		}
+		else {
+			parkingLotAttendent.addCarToLot(parkedCars, car);
+		}
+		if (!isParkingSlotAvailable()) {
+			parkingLotOwner.notifyFull();
+			trafficCop.notifyWhenLotIsFull();
 		}
 	}
 
 	public void unPark(Car car) throws CarIsNotAvailableException {
 		if (parkedCars.contains(car)) {
-			if(parkingLotCapacity==parkedCars.size())
-				System.out.println(trafficCop);
-				trafficCop.notifyWhenSpaceIsAvailable();
-			parkedCars.remove(car);
-		} else {
+			parkingLotAttendent.unParkTheCar(parkedCars, car);
+		}
+		else {
 			throw new CarIsNotAvailableException();
 		}
 	}
