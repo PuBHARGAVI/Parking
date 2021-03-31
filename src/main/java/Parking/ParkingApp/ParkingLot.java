@@ -52,6 +52,8 @@ public class ParkingLot {
 
 	public void unPark(Car car) throws CarIsNotAvailableException {
 		if (parkedCars.contains(car)) {
+			if (parkingLotCapacity == parkedCars.size())
+				trafficCop.notifyWhenSpaceIsAvailable();
 			parkingLotAttendent.unParkTheCar(parkedCars, car);
 		}
 		else {

@@ -89,4 +89,14 @@ public class ParkingLotTest {
 		
 		verify(trafficCop).notifyWhenLotIsFull();
 	}
+
+	@Test
+	public void testIfTheCopIsNotifiedWhenSpaceIsAvailableInLot()
+			throws CarIsNotAvailableException, LimitExceededException, CarIsAlreadyParkedException {
+		parkingLot.park(car);
+		parkingLot.park(firstCar);
+		parkingLot.unPark(car);
+		
+		verify(trafficCop).notifyWhenSpaceIsAvailable();
+	}
 }
