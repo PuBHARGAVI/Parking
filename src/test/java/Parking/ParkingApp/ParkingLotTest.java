@@ -99,4 +99,12 @@ public class ParkingLotTest {
 		
 		verify(trafficCop).notifyWhenSpaceIsAvailable();
 	}
+	
+	@Test
+	public void testIfAttendentParkedTheCar()
+			throws LimitExceededException, CarIsAlreadyParkedException {
+		parkingLot.park(car);
+
+		verify(attendent).addCarToLot(parkingLot.getParkedCars(), car);
+	}
 }
