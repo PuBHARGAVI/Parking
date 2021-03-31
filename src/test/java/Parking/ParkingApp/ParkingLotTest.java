@@ -107,4 +107,13 @@ public class ParkingLotTest {
 
 		verify(attendent).addCarToLot(parkingLot.getParkedCars(), car);
 	}
+	
+	@Test
+	public void testIfAttendentUnParkedTheCar()
+			throws CarIsNotAvailableException, LimitExceededException, CarIsAlreadyParkedException {
+		parkingLot.park(car);
+		parkingLot.unPark(car);
+		
+		verify(attendent).unParkTheCar(parkingLot.getParkedCars(), car);
+	}
 }
